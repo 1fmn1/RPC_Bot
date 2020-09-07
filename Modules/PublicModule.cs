@@ -2,9 +2,9 @@ using System.IO;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
-using _02_commands_framework.Services;
+using RPC_Bot.Services;
 
-namespace _02_commands_framework.Modules
+namespace RPC_Bot.Modules
 {
     // Modules must be public and inherit from an IModuleBase
     public class PublicModule : ModuleBase<SocketCommandContext>

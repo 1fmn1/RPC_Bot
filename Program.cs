@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Discord;
 using Discord.WebSocket;
 using Discord.Commands;
-using _02_commands_framework.Services;
+using RPC_Bot.Services;
 
-namespace _02_commands_framework
+namespace RPC_Bot
 {
     // This is a minimal example of using Discord.Net's command
     // framework - by no means does it show everything the framework

@@ -2,7 +2,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace _02_commands_framework.Services
+namespace RPC_Bot.Services
 {
     public class PictureService
     {
