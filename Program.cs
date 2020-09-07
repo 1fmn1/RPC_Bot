@@ -17,7 +17,7 @@ namespace RPC_Bot
     // You can find samples of using the command framework:
     // - Here, under the 02_commands_framework sample
     // - https://github.com/foxbot/DiscordBotBase - a bare-bones bot template
-    // - https://github.com/foxbot/patek - a more feature-filled bot, utilizing more aspects of the library
+    // - https://github.com/foxbot/patek - a more feature-filled bot, utilizing more aspects of the librarys
     class Program
     {
         // There is no need to implement IDisposable like before as we are
@@ -40,7 +40,8 @@ namespace RPC_Bot
 
                 // Tokens should be considered secret data and never hard-coded.
                 // We can read from the environment variable to avoid hardcoding.
-                await client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("token"));
+                string token = "Mjc5NjA4NTI5NDQ1MzIyNzUz.WJ3DvA.QgSf9SC989JTiB9rMFckomxOSXE";
+                await client.LoginAsync(TokenType.Bot, token);
                 await client.StartAsync();
 
                 // Here we initialize the logic required to register our commands.
