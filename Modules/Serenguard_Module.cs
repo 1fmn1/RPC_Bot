@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RPC_Bot.Modules 
 {
-static class Serenguard_Module
+public static class Serenguard_Module
 {
     public class Seven
     {

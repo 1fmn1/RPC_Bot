@@ -81,8 +81,8 @@ namespace RPC_Bot.Modules
 
         public void CalculateStats()
         {
-            int ItemCounter;
-            int Income;
+            int ItemCounter=0;
+            int Income=0;
             string Item = "";
             try
             {
@@ -92,7 +92,7 @@ namespace RPC_Bot.Modules
                     {
                         foreach (var au in Auctionlist.Where(x => x.resource_type == "Mithril Shards"))
                         {
-                            Income = Income + au.final_price;
+                            Income = Income + (int)au.final_price;
                             if (au.final_price > 0)
                                 ItemCounter += 1;
                         }
@@ -106,7 +106,7 @@ namespace RPC_Bot.Modules
                     {
                         foreach (var au in Auctionlist.Where(x => x.resource_type == "Arcane Crystals"))
                         {
-                            Income = Income + au.final_price;
+                            Income = Income + (int)au.final_price;
                             if (au.final_price > 0)
                                 ItemCounter += 1;
                         }
@@ -120,7 +120,7 @@ namespace RPC_Bot.Modules
                     {
                         foreach (var au in Auctionlist.Where(x => x.resource_type == "Prismatic Gemstones"))
                         {
-                            Income = Income + au.final_price;
+                            Income = Income + (int)au.final_price;
                             if (au.final_price > 0)
                                 ItemCounter += 1;
                         }
@@ -133,13 +133,13 @@ namespace RPC_Bot.Modules
                     Auctionlist.Sort((x, y) => System.Convert.ToInt32(y.final_price).CompareTo(x.final_price));
                     foreach (AuctionNewClass Au in Auctionlist)
                     {
-                        Income = Income + Au.final_price;
+                        Income = Income + (int)Au.final_price;
                         if (Au.final_price > 0)
                             ItemCounter += 1;
                     }
                     Items_Sold = ItemCounter;
                     Total_Income = Income;
-                    Highest_Earning = Auctionlist[0].final_price;
+                    Highest_Earning = (int)Auctionlist[0].final_price;
                     Highest_Earning_Item = $"[{Auctionlist[0].item_name_en}](http://www.roshpit.ca/market/auction/{Auctionlist[0].id})";
                     // Auctionlist.Sort(Function(x, y) y.AucDate.CompareTo(x.AucDate))
                     // For i = Auctionlist.Count - 1 To 0 Step -1
@@ -196,7 +196,7 @@ namespace RPC_Bot.Modules
                             else if (helpcounter >= ItemCounter)
                             {
                                 ItemCounter = helpcounter;
-                                Item = Auctionlist[i - 1].buyer_id;
+                                Item = Auctionlist[i - 1].buyer_id.ToString();
                                 helpcounter = 1;
                             }
                             else
@@ -215,7 +215,7 @@ namespace RPC_Bot.Modules
                     {
                         foreach (var au in AuctionlistBuy.Where(x => x.resource_type == "Mithril Shards"))
                         {
-                            Income = Income + au.final_price;
+                            Income = Income + (int)au.final_price;
                             if (au.final_price > 0)
                                 ItemCounter += 1;
                         }
@@ -229,7 +229,7 @@ namespace RPC_Bot.Modules
                     {
                         foreach (var au in AuctionlistBuy.Where(x => x.resource_type == "Arcane Crystals"))
                         {
-                            Income = Income + au.final_price;
+                            Income = Income + (int)au.final_price;
                             if (au.final_price > 0)
                                 ItemCounter += 1;
                         }
@@ -243,7 +243,7 @@ namespace RPC_Bot.Modules
                     {
                         foreach (var au in AuctionlistBuy.Where(x => x.resource_type == "Prismatic Gemstones"))
                         {
-                            Income = Income + au.final_price;
+                            Income = Income + (int)au.final_price;
                             if (au.final_price > 0)
                                 ItemCounter += 1;
                         }
@@ -260,13 +260,13 @@ namespace RPC_Bot.Modules
                     AuctionlistBuy.Sort((x, y) => System.Convert.ToInt32(y.final_price).CompareTo(x.final_price));
                     foreach (AuctionNewClass Au in AuctionlistBuy)
                     {
-                        Income = Income + Au.final_price;
+                        Income = Income + (int)Au.final_price;
                         if (Au.final_price > 0)
                             ItemCounter += 1;
                     }
                     Items_Bought = ItemCounter;
                     Total_Spent = Income;
-                    Highest_Spending = AuctionlistBuy[0].final_price;
+                    Highest_Spending = (int)AuctionlistBuy[0].final_price;
                     Highest_Spending_Item = $"[{AuctionlistBuy[0].item_name_en}](http://www.roshpit.ca/market/auction/{AuctionlistBuy[0].id})";
                 }
 

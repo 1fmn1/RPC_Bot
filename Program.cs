@@ -7,6 +7,7 @@ using Discord;
 using Discord.WebSocket;
 using Discord.Commands;
 using RPC_Bot.Services;
+using static RPC_Bot.Modules.Global_Variables;
 
 namespace RPC_Bot
 {
@@ -34,7 +35,7 @@ namespace RPC_Bot
             using (var services = ConfigureServices())
             {
                 var client = services.GetRequiredService<DiscordSocketClient>();
-
+                RoshpitStats.Load();
                 client.Log += LogAsync;
                 services.GetRequiredService<CommandService>().Log += LogAsync;
 
