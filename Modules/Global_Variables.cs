@@ -40,10 +40,10 @@ namespace RPC_Bot.Modules
         //public const string MinersFile = @"d:\DZHosts\LocalUser\medivh015\www.Curator.somee.com\Miners.txt";
         //public const string statusFile = @"d:\DZHosts\LocalUser\medivh015\www.Curator.somee.com\Status.txt";
 
-        public const string MinersFile = @"h:\programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\miners.txt";
-        public const string statusFile = @"h:\programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\Status.txt";
-        public const string LOG_FILE = @"h:\programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\log.txt";
-        public const string RegisteredFile = @"h:\programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\registrations.txt";
-        public const string IGNORE_FILENAME = @"h:\programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\ignorelist.txt";
+        //public const string MinersFile = @"h:\programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\miners.txt";
+        //public const string statusFile = @"h:\programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\Status.txt";
+        public const string LOG_FILE = @"Log.txt";
+        //public const string RegisteredFile = @"h:\programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\registrations.txt";
+        //public const string IGNORE_FILENAME = @"h:\programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\ignorelist.txt";
     }
 }

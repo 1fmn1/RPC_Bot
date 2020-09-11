@@ -56,3 +56,4 @@ H:\Programming\RPC_Bot\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\e_sqlit
 H:\Programming\RPC_Bot\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\e_sqlite3.dll
 H:\Programming\RPC_Bot\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
 H:\Programming\RPC_Bot\obj\Debug\netcoreapp3.1\RPC_Bot.csproj.CoreCompileInputs.cache
+H:\Programming\RPC_Bot\bin\Debug\netcoreapp3.1\Log.txt

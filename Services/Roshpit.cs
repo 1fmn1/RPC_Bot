@@ -89,8 +89,9 @@ namespace RPC_Bot.Services
                 Global_Stats_String = $"Roshpit Champions Market Stats : Loaded `{auction_counter}` auctions made by `{Users.Count}` sellers.";
                 try
                 {
-                    LastModified = FileSystem.FileDateTime(LOG_FILE);
-                }
+                ///LastModified = DateTime.Now;
+                LastModified = FileSystem.FileDateTime(LOG_FILE);
+            }
                 catch
                 {
                     LastModified = DateTime.Now;

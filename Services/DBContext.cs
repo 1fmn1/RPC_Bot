@@ -20,7 +20,7 @@ namespace RPC_Bot.Services
     {
         // Public Const DataFile As String = "G:\\programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\Auctions.db"
         // Public Const DataFile As String = "h:\root\home\medivh015-001\www\site1\Auctions.db"
-        const string DataFile = @"H:\Programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\Auctions.db";
+        const string DataFile = @"Auctions.db";
         //const string DataFile = @"Au.db";
         //const string DataFile = @"d:\DZHosts\LocalUser\medivh015\www.Curator.somee.com\Auctions.db";
         // Public Const DataFile As String =
