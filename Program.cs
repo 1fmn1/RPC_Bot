@@ -39,7 +39,7 @@ namespace RPC_Bot
             {
                 var client = services.GetRequiredService<DiscordSocketClient>();
                 RoshpitStats.Load();
-                Config conf;
+
                 string configuration;
                 configuration = File.ReadAllText("config.json");
                 conf = JsonConvert.DeserializeObject<Config>(configuration);

@@ -13,6 +13,9 @@ using System.Linq;
 using System.Collections.Generic;
 using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Globalization;
+using Microsoft.EntityFrameworkCore.Metadata;
+using System.Net;
 
 namespace RPC_Bot.Modules
 {
@@ -249,7 +252,7 @@ namespace RPC_Bot.Modules
                 else
                     builder.AddField("★" + helpItem.Special_Ability, $"__Damage type__         **{helpItem.Special_Ability_Damage_Type}**\r\n\t"
                                   + $"__Element__               **{helpItem.Special_Ability_Element}**\r\n\r\n" + helpItem.Special_Ability_Description, true);
-             }
+            }
             await ReplyAsync("", embed: builder.Build());
         }
 
@@ -323,7 +326,7 @@ namespace RPC_Bot.Modules
 
         [Command("hangman")]
         public async Task HangmanAsync()
-        { 
+        {
             HangManGame.NewGame(Context.Message);
         }
         [Command("htop")]
@@ -340,29 +343,29 @@ namespace RPC_Bot.Modules
             alist = RegisteredList.ToList();
             alist.Sort((y, x) => x.Value.HangManScore.CompareTo(y.Value.HangManScore));
             for (var i = 0; i <= 9; i++)
-            helpstring = helpstring + $"{i + 1}. <@{alist[i].Key}>" + Constants.vbCrLf;
+                helpstring = helpstring + $"{i + 1}. <@{alist[i].Key}>" + Constants.vbCrLf;
             builder.AddField("Name", helpstring, true);
             helpstring = "";
             for (var i = 0; i <= 9; i++)
                 helpstring = helpstring + alist[i].Value.HangManScore + Constants.vbCrLf;
             builder.AddField("Points", helpstring, true);
-            await(ReplyAsync("", embed: builder.Build()));
-    
+            await (ReplyAsync("", embed: builder.Build()));
+
         }
 
-    [Command("guess")]
+        [Command("guess")]
         public async Task GuessAsync([Remainder] string text)
         {
             if (HangManGame.GameInstances.ContainsKey(Context.Message.Author))
             {
                 if (HangManGame.GameInstances[Context.Message.Author].GameEnded)
-                { 
+                {
                     await ReplyAsync("Your game has ended.");
-                                        return;
+                    return;
                 }
-               await HangManGame.GameInstances[Context.Message.Author].Guess(text.First());
-               if (Context.IsPrivate==false)
-                await Context.Message.DeleteAsync();
+                await HangManGame.GameInstances[Context.Message.Author].Guess(text.First());
+                if (Context.IsPrivate == false)
+                    await Context.Message.DeleteAsync();
             }
             else
                 await ReplyAsync("Use ?hangman to start a game first.");
@@ -386,6 +389,45 @@ namespace RPC_Bot.Modules
             else
                 await ReplyAsync("Use ?hangman to start a game first.");
         }
+        [Command("top")]
+        public async Task AsyncTop()
+        {
+            WebClient wc = new WebClient();
+            string a;
+            TopClass[] mytop;
+            EmbedBuilder builder = new EmbedBuilder();
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
+            string helpstring = "";
+
+            a= wc.DownloadString("https://www.roshpit.ca/champions/API/richest_players");
+            mytop = Newtonsoft.Json.JsonConvert.DeserializeObject<TopClass[]>(a);
+            builder.WithTitle($"TOP RICHEST PLAYERS");
+            builder.WithColor(Discord.Color.Blue);
+            builder.WithThumbnailUrl("https://b.catgirlsare.sexy/ceO7.png");
+            string[] aname = new string [9];
+            for (int i = 0; i <= 4; i++)
+            {
+                foreach (RegisteredUserClass reguser in RegisteredList.Values)
+                {
+                    if (reguser.DotaID == (ulong)mytop[i].steam_id)
+                        aname[i] = reguser.Name;
+                }
+
+
+                if (aname[i] == "")
+                    aname[i] = mytop[i].steam_id.ToString();
+                string s;
+                s = aname[i];
+                helpstring = helpstring + $"{i + 1}. {$"[{s}](http://www.roshpit.ca/players/{mytop[i].steam_id})"}{Constants.vbTab}{RoshpitStats.Heroes["prismatic_gemstone"]}{mytop[i].prismatic_gemstones.ToString("N0", culture)}{Constants.vbTab}{RoshpitStats.Heroes["mithril_shard"]}{mytop[i].mithril_shards.ToString("N0", culture)}{Constants.vbTab}{RoshpitStats.Heroes["arcane_crystal"]}{mytop[i].arcane_crystals.ToString("N0", culture)}" + Constants.vbCrLf + Constants.vbCrLf;
+
+            }
+            builder.WithDescription(helpstring);
+            builder.WithFooter($"Requested by {Context.Message.Author.Username}");
+            await ReplyAsync("", embed: builder.Build());
+}
+
+
+
 
         [Command("ping")]
         [Alias("pong", "hello")]

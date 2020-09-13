@@ -77,7 +77,7 @@ namespace RPC_Bot.Services
                 Heroes.Add("Doge", "<:Doge:280432351425593345>");
                 Heroes.Add("Catgasm", "<:Catgasm:280432329627926540>");
                 Heroes.Add("mithril_shard", "<:mithril_shard:422449779016990730>");
-                Heroes.Add("prismatic_gemstone", "<:omniro:575083345206050842>");
+                Heroes.Add("prismatic_gemstone", "<:prismatic_gemstone:664282137721307156>");
                 // Heroes.Add("medivhCmonBruh", "<:medivhCmonBruh:422102804228866061>")
                 Heroes.Add("arcane_crystal", "<:arcane_crystal:422449737002778625>");
                 Heroes.Add("deckard", "<:deckard:422449840601956372>");

@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\vanya\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\vanya\\.nuget\\packages"
+    ]
+  }
+}

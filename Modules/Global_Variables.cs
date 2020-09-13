@@ -7,6 +7,7 @@ namespace RPC_Bot.Modules
 {
      static class Global_Variables
     {
+        public static Config conf;
         public const string SPLITTER = "¿";
         public static bool Running = true;
         public static Dictionary<ulong, DateTime> ignorelist = new Dictionary<ulong, DateTime>();

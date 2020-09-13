@@ -173,7 +173,7 @@ namespace RPC_Bot.Services
                 mes = (Discord.Rest.RestUserMessage)(await message.Channel.GetMessageAsync(message.Id));
                 await mes.DeleteAsync();
             }
-            if ((!message.HasMentionPrefix(_discord.CurrentUser, ref argPos)) && (!message.HasCharPrefix('!', ref argPos))) return;
+            if ((!message.HasMentionPrefix(_discord.CurrentUser, ref argPos)) && (!message.HasCharPrefix(conf.prefix, ref argPos))) return;
             if ((message.Channel.Id == 391268932696145920) || (message.Channel.Id == 391268981446803466) || (message.Channel.Id == 331554376181219350) || (message.Channel.Id == 299731610683572224))
             {
                 await message.Channel.SendMessageAsync("<:MonkaS:663460636490989597> 👉 <#431938235267284992>");
