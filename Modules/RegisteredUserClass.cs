@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace RPC_Bot.Modules
 {
+    /// <summary>
+    /// RegisteredUserClass entity
+    /// </summary>
     public class RegisteredUserClass
     {
-        public ulong DotaID;
-        public string Name;
-        public ulong DiscordID;
-        public int HangManScore = 0;
+        [Key]
+        public ulong DiscordID { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public ulong DotaID { get; set; }
+        [Required]
+        public int HangManScore { get; set; }
     }
 
     public class channelTimerstruct

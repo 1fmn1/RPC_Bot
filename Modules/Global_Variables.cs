@@ -27,7 +27,7 @@ namespace RPC_Bot.Modules
         public static bool UpdatesEnabled = true;
         public static bool UpdateIsRunning;
         public static Dictionary<ulong, RegisteredUserClass> RegisteredList = new Dictionary<ulong, RegisteredUserClass>();
-        //public static HangManClass HangManGame;
+        public static HangManClass HangManGame;
         public static bool renewRegisterList;
         public static Random rn = new Random();
         public static List<Discord.GuildEmote> PingedEmotes;

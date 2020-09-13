@@ -41,3 +41,26 @@ namespace RPC_Bot.Services
     }
 
 }
+    public class UserContext : DbContext
+{
+    // Public Const DataFile As String = "G:\\programming\RPC_BOT_WEB\RPC_BOT_WEB\Tables\Auctions.db"
+    // Public Const DataFile As String = "h:\root\home\medivh015-001\www\site1\Auctions.db"
+    const string DataFile = @"Users.db";
+    //const string DataFile = @"Au.db";
+    //const string DataFile = @"d:\DZHosts\LocalUser\medivh015\www.Curator.somee.com\Auctions.db";
+    // Public Const DataFile As String =
+    // Public Property Companies As DbSet(Of Company)
+    // Public Property ItemsNew As DbSet(Of ItemClassNew)
+    public DbSet<RegisteredUserClass> Users { get; set; }
+
+    public UserContext()
+    {
+        Database.EnsureCreated();
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite($"Filename={DataFile}");
+    }
+}
+

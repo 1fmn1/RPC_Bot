@@ -1,4 +1,3 @@
-H:\Programming\RPC_Bot\bin\Release\netcoreapp3.1\Auctions.db
 H:\Programming\RPC_Bot\bin\Release\netcoreapp3.1\RPC_Bot.exe
 H:\Programming\RPC_Bot\bin\Release\netcoreapp3.1\Log.txt
 H:\Programming\RPC_Bot\bin\Release\netcoreapp3.1\RPC_Bot.deps.json
@@ -57,3 +56,7 @@ H:\Programming\RPC_Bot\obj\Release\netcoreapp3.1\RPC_Bot.csproj.CopyComplete
 H:\Programming\RPC_Bot\obj\Release\netcoreapp3.1\RPC_Bot.dll
 H:\Programming\RPC_Bot\obj\Release\netcoreapp3.1\RPC_Bot.pdb
 H:\Programming\RPC_Bot\obj\Release\netcoreapp3.1\RPC_Bot.genruntimeconfig.cache
+H:\Programming\RPC_Bot\bin\Release\netcoreapp3.1\Auctions.db
+H:\Programming\RPC_Bot\bin\Release\netcoreapp3.1\Users.db
+H:\Programming\RPC_Bot\bin\Release\netcoreapp3.1\config.json
+H:\Programming\RPC_Bot\obj\Release\netcoreapp3.1\RPC_Bot.csprojAssemblyReference.cache

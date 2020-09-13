@@ -7,6 +7,12 @@ using RPC_Bot.Services;
 using static RPC_Bot.Modules.Serenguard_Module;
 using static RPC_Bot.Modules.Global_Variables;
 using System.Text.RegularExpressions;
+using HtmlAgilityPack;
+using Microsoft.VisualBasic;
+using System.Linq;
+using System.Collections.Generic;
+using Discord.WebSocket;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace RPC_Bot.Modules
 {
@@ -247,6 +253,139 @@ namespace RPC_Bot.Modules
             await ReplyAsync("", embed: builder.Build());
         }
 
+        [Command("register")]
+        public async Task registerAsync([Remainder] string text)
+        {
+            bool result;
+            uint Userid;
+
+            if (text.Contains("roshpit.ca") == false)
+            {
+                Discord.Rest.RestUserMessage mes;
+                mes = (Discord.Rest.RestUserMessage)(await Context.Channel.GetMessageAsync(Context.Message.Id));
+                await mes.AddReactionAsync(await Context.Client.GetGuild(279649221517246464).GetEmoteAsync(425332435773816842));
+            }
+            Uri link = new Uri("http://roshpit.ca");
+            try
+            {
+                link = new Uri(text, UriKind.Absolute);
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                result = false;
+            }
+            Userid = 0;
+            result = uint.TryParse(link.Segments.Last(), out Userid);
+            if (result)
+            {
+                if (RegisteredList.ContainsKey(Context.Message.Author.Id) == false)
+                {
+                    HtmlWeb web = new HtmlWeb();
+                    HtmlDocument doc;
+                    doc = web.Load($"https://www.roshpit.ca/players/{Userid}");
+                    HtmlNode a = doc.DocumentNode.SelectSingleNode($"//span[@id={Strings.Chr(34)}index-title{Strings.Chr(34)}]");
+                    if (a == null)
+                        return;
+                    RegisteredList.Add(Context.Message.Author.Id, new RegisteredUserClass() { DotaID = Userid, DiscordID = Context.Message.Author.Id, Name = (System.Net.WebUtility.HtmlDecode((a.InnerText.Replace(Constants.vbLf, "").Replace(Constants.vbTab, "")))).Trim() });
+                    renewRegisterList = true;
+
+                    using (UserContext cont = new UserContext())
+                    {
+                        cont.Users.UpdateRange(RegisteredList.Values.ToList());
+                        await cont.SaveChangesAsync();
+                    }
+                    Discord.Rest.RestUserMessage mes;
+                    mes = (Discord.Rest.RestUserMessage)(await Context.Message.Channel.GetMessageAsync(Context.Message.Id));
+                    await mes.AddReactionAsync(await Context.Client.GetGuild(279649221517246464).GetEmoteAsync(425332394422173706));
+                    return;
+                }
+                else
+                {
+                    Discord.Rest.RestUserMessage mes;
+                    mes = (Discord.Rest.RestUserMessage)(await Context.Message.Channel.GetMessageAsync(Context.Message.Id));
+                    await mes.AddReactionAsync(await Context.Client.GetGuild(279649221517246464).GetEmoteAsync(425332435773816842));
+                    // Dim dmchan As SocketDMChannel = Await arg.Author.GetOrCreateDMChannelAsync()
+                    await ReplyAsync($"Sorry {Context.Message.Author.Mention}, you already registered as [{RegisteredList[Context.Message.Author.Id].Name}]({RegisteredList[Context.Message.Author.Id].DotaID}). If you made a mistake in ID, send PM to {(await Context.Message.Channel.GetUserAsync(216861458196201484)).Mention}");
+                    return;
+                }
+            }
+            else
+            {
+                Discord.Rest.RestUserMessage mes;
+                mes = (Discord.Rest.RestUserMessage)(await Context.Message.Channel.GetMessageAsync(Context.Message.Id));
+                await mes.AddReactionAsync(await Context.Client.GetGuild(279649221517246464).GetEmoteAsync(425332435773816842));
+                // Dim dmchan As SocketDMChannel = Await arg.Author.GetOrCreateDMChannelAsync
+                await ReplyAsync($"You are trying to register wrong roshpit.ca profile link. Check your information And try again.");
+                return;
+            }
+        }
+
+        [Command("hangman")]
+        public async Task HangmanAsync()
+        { 
+            HangManGame.NewGame(Context.Message);
+        }
+        [Command("htop")]
+        public async Task HtopAsync()
+        {
+            string helpstring;
+            List<KeyValuePair<ulong, RegisteredUserClass>> alist;
+            List<SocketUser> blist = new List<SocketUser>();
+
+            EmbedBuilder builder = new EmbedBuilder();
+            builder.WithTitle($"Hangman top.");
+            builder.WithColor(Discord.Color.DarkOrange);
+            helpstring = "";
+            alist = RegisteredList.ToList();
+            alist.Sort((y, x) => x.Value.HangManScore.CompareTo(y.Value.HangManScore));
+            for (var i = 0; i <= 9; i++)
+            helpstring = helpstring + $"{i + 1}. <@{alist[i].Key}>" + Constants.vbCrLf;
+            builder.AddField("Name", helpstring, true);
+            helpstring = "";
+            for (var i = 0; i <= 9; i++)
+                helpstring = helpstring + alist[i].Value.HangManScore + Constants.vbCrLf;
+            builder.AddField("Points", helpstring, true);
+            await(ReplyAsync("", embed: builder.Build()));
+    
+        }
+
+    [Command("guess")]
+        public async Task GuessAsync([Remainder] string text)
+        {
+            if (HangManGame.GameInstances.ContainsKey(Context.Message.Author))
+            {
+                if (HangManGame.GameInstances[Context.Message.Author].GameEnded)
+                { 
+                    await ReplyAsync("Your game has ended.");
+                                        return;
+                }
+               await HangManGame.GameInstances[Context.Message.Author].Guess(text.First());
+               if (Context.IsPrivate==false)
+                await Context.Message.DeleteAsync();
+            }
+            else
+                await ReplyAsync("Use ?hangman to start a game first.");
+
+        }
+
+        [Command("word")]
+        public async Task WordAsync([Remainder] string text)
+        {
+            if (HangManGame.GameInstances.ContainsKey(Context.Message.Author))
+            {
+                if (HangManGame.GameInstances[Context.Message.Author].GameEnded)
+                {
+                    await ReplyAsync("Your game has ended.");
+                    return;
+                }
+                await HangManGame.GameInstances[Context.Message.Author].GuessWord(text);
+                if (Context.IsPrivate == false)
+                    await Context.Message.DeleteAsync();
+            }
+            else
+                await ReplyAsync("Use ?hangman to start a game first.");
+        }
 
         [Command("ping")]
         [Alias("pong", "hello")]

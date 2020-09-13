@@ -8,6 +8,9 @@ using Discord.WebSocket;
 using Discord.Commands;
 using RPC_Bot.Services;
 using static RPC_Bot.Modules.Global_Variables;
+using RPC_Bot.Modules;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace RPC_Bot
 {
@@ -36,13 +39,16 @@ namespace RPC_Bot
             {
                 var client = services.GetRequiredService<DiscordSocketClient>();
                 RoshpitStats.Load();
+                Config conf;
+                string configuration;
+                configuration = File.ReadAllText("config.json");
+                conf = JsonConvert.DeserializeObject<Config>(configuration);
                 client.Log += LogAsync;
                 services.GetRequiredService<CommandService>().Log += LogAsync;
 
                 // Tokens should be considered secret data and never hard-coded.
                 // We can read from the environment variable to avoid hardcoding.
-                string token = "Mjc5NjA4NTI5NDQ1MzIyNzUz.WJ3DvA.QgSf9SC989JTiB9rMFckomxOSXE";
-                await client.LoginAsync(TokenType.Bot, token);
+                await client.LoginAsync(TokenType.Bot, conf.token);
                 await client.StartAsync();
 
                 // Here we initialize the logic required to register our commands.

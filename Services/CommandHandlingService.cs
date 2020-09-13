@@ -168,8 +168,10 @@ namespace RPC_Bot.Services
                 builder.AddField("Auction Details", helpstring, true);
                 builder.Description = Regex.Replace(message.Content, @"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?", "");
                 //
-                //await message.DeleteAsync();
                 await message.Channel.SendMessageAsync("", embed: builder.Build());
+                Discord.Rest.RestUserMessage mes;
+                mes = (Discord.Rest.RestUserMessage)(await message.Channel.GetMessageAsync(message.Id));
+                await mes.DeleteAsync();
             }
             if ((!message.HasMentionPrefix(_discord.CurrentUser, ref argPos)) && (!message.HasCharPrefix('!', ref argPos))) return;
             if ((message.Channel.Id == 391268932696145920) || (message.Channel.Id == 391268981446803466) || (message.Channel.Id == 331554376181219350) || (message.Channel.Id == 299731610683572224))
@@ -208,14 +210,29 @@ namespace RPC_Bot.Services
         }
         private Task bot_Ready()
         {
+
+
+            using (UserContext us = new UserContext())
+            {
+                //RegisteredList = new Dictionary<ulong, RegisteredUserClass>();
+                RegisteredList = us.Users.ToDictionary(p => p.DiscordID);
+            }
+
+
             SocketGuild b;
-            b = _discord.GetGuild(503160168482340865);
             Dictionary<string, GuildEmote> a;
+
+            b = _discord.GetGuild(503160168482340865);
+            //a = new Dictionary<string, GuildEmote>();
             a = b.Emotes.ToDictionary(x => ":" + x.Name + ":");
             b = _discord.GetGuild(299728973380976651);
             RoshpitEmotes = b.Emotes.ToList();
+            //RoshpitEmotes = new List<GuildEmote>();
             b = _discord.GetGuild(510201275468611584);
+            //PingedEmotes = new List<GuildEmote>();
             PingedEmotes = b.Emotes.ToList();
+            HangManGame = new HangManClass(RoshpitStats.ItemList.Keys.ToList(), RoshpitStats.Heroes.Values.ToList(), a);
+
             return Task.CompletedTask;
             //HangManGame = new HangManClass(RoshpitStats.ItemList.Keys.ToList, RoshpitStats.Heroes.Values.ToList, a);
         }
