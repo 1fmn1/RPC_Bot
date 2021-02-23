@@ -1,1 +1,7 @@
-gsutil cp gs://rpcbot/rpcbot/rpcbot.zip rpcbot
+su
+tmux kill-server
+gsutil cp gs://rpcbot/rpcbot/RPC_Bot.dll rpcbot/rpcbot
+tmux
+cd rpcbot/rpcbot
+dotnet RPC_Bot.dll
+git clone https://github.com/1fmn1/RPC_Bot.git

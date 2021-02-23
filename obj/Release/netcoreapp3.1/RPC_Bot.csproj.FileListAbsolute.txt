@@ -59,3 +59,4 @@ H:\Programming\RPC_Bot\obj\Release\netcoreapp3.1\RPC_Bot.genruntimeconfig.cache
 H:\Programming\RPC_Bot\bin\Release\netcoreapp3.1\Auctions.db
 H:\Programming\RPC_Bot\bin\Release\netcoreapp3.1\Users.db
 H:\Programming\RPC_Bot\bin\Release\netcoreapp3.1\config.json
+H:\Programming\RPC_Bot\obj\Release\netcoreapp3.1\RPC_Bot.csprojAssemblyReference.cache

@@ -103,19 +103,19 @@ namespace RPC_Bot.Services
                     helpstring = helpstring + $"{emoMagicArmor} {new_auc.base_magic_armor}\r\n";
 
                 //Sockets
-                if (new_auc.socket1 == "none" || new_auc.socket1 == "") ;
+                if (new_auc.socket1 == "none" || new_auc.socket1 == null) ;
                 else if (new_auc.socket1 == "open")
                     helpstring = helpstring + $"{PingedEmotes.Find(c => c.ToString().Contains(new_auc.socket1))}";
                 else
                     helpstring = helpstring + $"{PingedEmotes.Find(c => c.ToString().Contains($"{new_auc.socket1}{new_auc.socket1value}"))}";
-                if (new_auc.socket2 == "none" || new_auc.socket2 == "") ;
+                if (new_auc.socket2 == "none" || new_auc.socket2 == null) ;
                 else if (new_auc.socket2 == "open")
                     helpstring = helpstring + $"{PingedEmotes.Find(c => c.ToString().Contains(new_auc.socket2))}";
                 else
                     helpstring = helpstring + $"{PingedEmotes.Find(c => c.ToString().Contains($"{new_auc.socket2}{new_auc.socket2value}"))}";
                 //Properties
                 //Property1
-                if (new_auc.property1name != "")
+                if (new_auc.property1name != null)
                 {
                     if (new_auc.property1name.Contains("immortal*weapon"))
                     {
@@ -124,26 +124,26 @@ namespace RPC_Bot.Services
                         if (hero == "axe") hero = "redgeneral";
                         helpstring = helpstring + $"★ {RoshpitEmotes.Find(c => c.ToString().Contains(hero))} **Weapon**\r\n";
                     }
-                }
-                else if (new_auc.property1name.Contains("arcana"))
-                {
+                    else if (new_auc.property1name.Contains("arcana"))
+                    {
                     string hero;
                     hero = new_auc.roshpititem_variant.Split("_")[2];
                                 if (hero == "axe") hero = "redgeneral";
                     helpstring = helpstring + $"★ {RoshpitEmotes.Find(c => c.ToString().Contains(hero))} **Arcana**\r\n";
-                            }
-                else if (new_auc.property1name.Contains ("immortal"))
+                    }
+                    else if (new_auc.property1name.Contains ("immortal"))
                         helpstring = helpstring + $"★**{new_auc.property1name.Substring(21).Replace("_", " ")}**\r\n";
-                else
+                    else
                     helpstring = helpstring + $"**{new_auc.property1name.Replace("_", " ")}** \t{new_auc.property1}\r\n";
+            }
             //Property2 3 4 
-            if (new_auc.property2name != "")
+            if (new_auc.property2name != null)
                 helpstring = helpstring + $"**{new_auc.property2name.Replace("_", " ")}**\t{new_auc.property2}\r\n";
-            if (new_auc.property3name != "")
+            if (new_auc.property3name != null)
                 helpstring = helpstring + $"**{new_auc.property3name.Replace("_", " ")}**\t{new_auc.property3}\r\n";
-            if (new_auc.property4name != "")
+            if (new_auc.property4name != null)
                 helpstring = helpstring + $"**{new_auc.property4name.Replace("_", " ")}**\t{new_auc.property4}\r\n";
-                if (new_auc.property1name != "")
+                if (new_auc.property1name != null)
                     builder.AddField("Properties:", helpstring, true);
 
                 //Bids

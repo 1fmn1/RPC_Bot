@@ -293,12 +293,27 @@ namespace RPC_Bot.Modules
                     RegisteredList.Add(Context.Message.Author.Id, new RegisteredUserClass() { DotaID = Userid, DiscordID = Context.Message.Author.Id, Name = (System.Net.WebUtility.HtmlDecode((a.InnerText.Replace(Constants.vbLf, "").Replace(Constants.vbTab, "")))).Trim() });
                     renewRegisterList = true;
 
-                    using (UserContext cont = new UserContext())
+                    try
                     {
-                        cont.Users.UpdateRange(RegisteredList.Values.ToList());
-                        await cont.SaveChangesAsync();
+                        using (UserContext cont = new UserContext())
+                        {
+                            cont.Users.Add(new RegisteredUserClass() { DotaID = Userid, DiscordID = Context.Message.Author.Id, Name = (System.Net.WebUtility.HtmlDecode((a.InnerText.Replace(Constants.vbLf, "").Replace(Constants.vbTab, "")))).Trim() });
+                            await cont.SaveChangesAsync();
+                        }
                     }
-                    Discord.Rest.RestUserMessage mes;
+                    catch (Exception ex)
+                    { }
+                    //try
+                    //{
+                    //    using (UserContext cont = new UserContext())
+                    //    {
+                    //        cont.Users.UpdateRange(RegisteredList.Values.ToList());
+                    //        await cont.SaveChangesAsync();
+                    //    }
+                    //}
+                    //catch (Exception ex)
+                    //{ }
+                Discord.Rest.RestUserMessage mes;
                     mes = (Discord.Rest.RestUserMessage)(await Context.Message.Channel.GetMessageAsync(Context.Message.Id));
                     await mes.AddReactionAsync(await Context.Client.GetGuild(279649221517246464).GetEmoteAsync(425332394422173706));
                     return;
@@ -327,6 +342,20 @@ namespace RPC_Bot.Modules
         [Command("hangman")]
         public async Task HangmanAsync()
         {
+            if (RegisteredList.ContainsKey(Context.Message.Author.Id)==false)
+            {
+                RegisteredList.Add(Context.Message.Author.Id, new RegisteredUserClass() { DotaID = 0, DiscordID = Context.Message.Author.Id, Name = Context.Message.Author.Username });
+                try
+                {
+                    using (UserContext cont = new UserContext())
+                    {
+                        cont.Users.Add(new RegisteredUserClass() { DotaID = 0, DiscordID = Context.Message.Author.Id, Name = Context.Message.Author.Username });
+                        await cont.SaveChangesAsync();
+                    }
+                }
+                catch (Exception ex)
+                { }
+            }
             HangManGame.NewGame(Context.Message);
         }
         [Command("htop")]
